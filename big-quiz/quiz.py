@@ -19,6 +19,15 @@ answer_box4.move_ip(735, 358)
 answer_boxes = [answer_box1, answer_box2, answer_box3, answer_box4]
 
 
+def draw():
+    screen.fill('dim gray')
+    screen.draw.filled_rect(main_box, 'sky blue')
+    screen.draw.filled_rect(timer_box, 'sky blue')
+
+    for box in answer_boxes:
+        screen.draw.filled_rect(box, 'orange')
+
+
 def game_over():
     pass
 

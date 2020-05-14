@@ -32,6 +32,9 @@ q4 = ["Which planet is closest to the Sun?",
 q5 = ["Where are the pyramids?",
       "India", "Egypt", "Morocco", "Canada", 2]
 
+questions = [q1, q2, q3, q4, q5]
+question = questions.pop(0)
+
 
 def draw():
     screen.fill('dim gray')
@@ -41,18 +44,53 @@ def draw():
     for box in answer_boxes:
         screen.draw.filled_rect(box, 'orange')
 
+    screen.draw.textbox(str(time_left), timer_box, color=('black'))
+    screen.draw.textbox(question[0], main_box, color=('black'))
+
+    index = 1
+    for box in answer_boxes:
+        screen.draw.textbox(question[index], box, color=('black'))
+        index = index + 1
+
 
 def game_over():
-    pass
+    global question, time_left
+    message = 'Game over. You got %s questions correct' % str(score)
+    question = [message, '-', '-', '-', '-', 5]
+    time_left = 0
 
 
 def correct_answer():
-    pass
+    global question, score, time_left
+
+    score = score + 1
+    if questions:
+        question = questions.pop(0)
+        time_left = 10
+    else:
+        print('End of questions')
+        game_over()
 
 
 def on_mouse_down(pos):
-    pass
+    index = 1
+    for box in answer_boxes:
+        if box.collidepoint(pos):
+            print('Clicked on answer ' + str(index))
+            if index == question[5]:
+                print('You got it correct!')
+                correct_answer()
+            else:
+                game_over()
+        index = index + 1
 
 
 def update_time_left():
-    pass
+    global time_left
+
+    if time_left:
+        time_left = time_left - 1
+    else:
+        game_over()
+
+clock.schedule_interval(update_time_left, 1.0)

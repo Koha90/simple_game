@@ -20,6 +20,7 @@ up = False
 game_over = False
 score = 0
 number_of_updates = 0
+lives = 3
 
 scores = []
 
